@@ -1,6 +1,7 @@
-from .base_enum import BaseEnum
+from hs_infra.enums.base.base_enum import BaseEnum
+
 
 class EduTypeEnum(BaseEnum):
-	Night = "night"
-	Day = "day"
-	Far_Away = "far away"
+    Night = 0
+    Day = 1
+    Far_Away = 2
