@@ -5,7 +5,7 @@ from .enums import EduTypeEnum
 
 class Student(models.Model):
 	code = models.CharField(max_length = 30, null = False)
-	entrance = models.BigIntegerField(null = True, blank = True)
+	entrance = models.BigIntegerField()
 	education_type = models.CharField(max_length = 30, choices = EduTypeEnum.choices(), default = EduTypeEnum.Day.value)
 	active_type = models.BooleanField(default = True)
 	first_name = models.CharField(max_length = 30)
