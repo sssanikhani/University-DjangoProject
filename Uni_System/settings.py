@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hs_infra',
+    # 'hs_infra',
     'rest_framework',
     'identity',
     'university',

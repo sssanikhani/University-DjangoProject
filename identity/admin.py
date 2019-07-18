@@ -1,20 +1,21 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
+
 from .models import *
+
+admin.site.register(BaseUser)
 
 
 class IdentityAdmin(admin.ModelAdmin):
-	list_display = ('user',)
+    list_display = ('user',)
+
 
 class StudentAdmin(IdentityAdmin):
-	pass
+    pass
+
 
 class TeacherAdmin(IdentityAdmin):
-	pass
-
-
+    pass
 
 
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Student, StudentAdmin)
-
