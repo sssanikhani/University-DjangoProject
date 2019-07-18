@@ -6,7 +6,6 @@ from rest_framework.views import APIView
 from .serializers import *
 from rest_framework import generics
 from .models import *
-from .serializers import *
 
 class SignupStudent(APIView):
 	def post(self, request):
@@ -18,7 +17,7 @@ class SignupStudent(APIView):
 		if user_serializer.is_valid():
 			user = user_serializer.save(is_staff = True)
 		else:
-			return Response(user.errors, status = status.HTTP_400_BAD_REQUEST)
+			return Response(user_serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 		serializer.save(user = user)
 		return Response(status = status.HTTP_201_CREATED)
@@ -42,12 +41,14 @@ class SignupTeacher(APIView):
 class Profile(APIView):
 	def get(self, request):
 		if request.user.is_anonymous:
-			return Response(status = status.HTTP_401_UNAUTHORIZED)
+			return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 		if hasattr(request.user, 'student'):
 			serializer = StudentProfileSerializer(request.user.student)
 		elif hasattr(request.user, 'teacher'):
 			serializer = TeacherProfileSerializer(request.user.teacher)
+		else:
+			serializer = UserSerializer(request.user)
 
 		return Response(serializer.data, status = status.HTTP_200_OK)
 

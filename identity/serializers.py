@@ -1,5 +1,4 @@
 from .models import *
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 class TeacherSignupSerializer(serializers.ModelSerializer):
@@ -14,22 +13,32 @@ class StudentSignupSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = User
-		fields = ('username', 'password', 'is_staff',)
+		model = BaseUser
+		fields = '__all__'
 
-	def create(self, validated_data):
-		return User.objects.create_user(**validated_data)
+	"""def create(self, validated_data):
+		new_user = UniversityUser.objects.create(**validated_data)
+		new_user.set_password(validated_data.get['password'])
+		return new_user"""
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = User
-		fields = ('username',)
+		model = BaseUser
+		fields = ('id', 'username',)
+
 
 class TeacherListSerializer(serializers.ModelSerializer):
-	user = serializers.ReadOnlyField(source = 'user.username')
+	user = UserSerializer()
 	class Meta:
 		model = Teacher
-		fields = ('first_name','last_name', 'user',)
+		fields = ('first_name', 'last_name', 'user',)
+
+
+class StudentListSerializer(serializers.ModelSerializer):
+	user = UserSerializer()
+	class Meta:
+		model = Student
+		fields = ('first_name', 'last_name', 'user',)
 
 from university.serializers import FacultiesListSerializer, CoursesListBriefSerializer
 
@@ -48,9 +57,3 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Student
 		exclude = ('student_cards',)
-
-class StudentListSerializer(serializers.ModelSerializer):
-	user = serializers.ReadOnlyField(source = 'user.username')
-	class Meta:
-		model = Student
-		fields = ('first_name', 'last_name', 'user',)

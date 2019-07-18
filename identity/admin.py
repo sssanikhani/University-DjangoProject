@@ -4,7 +4,7 @@ from .models import *
 
 
 class IdentityAdmin(admin.ModelAdmin):
-	list_display = ('first_name', 'last_name', 'code',)
+	list_display = ('user',)
 
 class StudentAdmin(IdentityAdmin):
 	pass
@@ -14,7 +14,7 @@ class TeacherAdmin(IdentityAdmin):
 
 
 
-# admin.site.unregister(User)
+
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Student, StudentAdmin)
 
