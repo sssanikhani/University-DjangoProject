@@ -12,7 +12,7 @@ class BaseUser(AbstractUser):
 
 class UniversityUser(BaseModel):
     code = models.CharField(max_length=30, null=False)
-    study_field = models.ForeignKey(StudyField, on_delete=models.CASCADE)
+    # study_field = models.ForeignKey(StudyField, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course, blank=True, null=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
