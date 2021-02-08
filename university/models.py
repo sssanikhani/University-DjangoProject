@@ -32,7 +32,7 @@ class Course(BaseModel):
     title = models.CharField(max_length=30, null=False)
     code = models.CharField(max_length=30, null=False)
     term = models.IntegerField(choices=TermEnum.choices(), default=TermEnum.arbitrary.value)
-
+    study_field = models.ForeignKey(to='StudyField', on_delete=models.CASCADE)
     faculty = models.ForeignKey(
         to=Faculty,
         on_delete=models.CASCADE,

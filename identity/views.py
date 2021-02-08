@@ -8,7 +8,18 @@ from identity.serializers import StudentSignupSerializer, UserCreateSerializer, 
     TeacherListSerializer, Teacher
 
 
+def create_user(request, serializer):
+	user_serializer = UserCreateSerializer(data = request.data.get('user'))
+	if user_serializer.is_valid():
+		user = user_serializer.save(is_staff = True)
+	else:
+		return user_serializer.errors
+	serializer.save(user=user)
+	return True
+
+
 class SignupStudent(APIView):
+
     def post(self, request):
         serializer = StudentSignupSerializer(data=request.data)
         if not serializer.is_valid():
@@ -27,7 +38,6 @@ class SignupStudent(APIView):
         serializer.save(user=user)
         return Response(status=status.HTTP_201_CREATED)
 
-
 class SignupTeacher(APIView):
     def post(self, request):
         serializer = TeacherSignupSerializer(data=request.data)
@@ -44,7 +54,6 @@ class SignupTeacher(APIView):
         serializer.save(user=user)
         return Response(status=status.HTTP_201_CREATED)
 
-
 class Profile(APIView):
     def get(self, request):
         if request.user.is_anonymous:
@@ -60,9 +69,11 @@ class Profile(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
 class StudentsList(generics.ListAPIView):
     serializer_class = StudentListSerializer
     queryset = Student.objects.all()
+
 
 
 class TeachersList(generics.ListAPIView):

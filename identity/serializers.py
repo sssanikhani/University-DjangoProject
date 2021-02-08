@@ -1,44 +1,46 @@
 from .models import *
 from rest_framework import serializers
+from .enums import EduTypeEnum
 
 class TeacherSignupSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Teacher
 		exclude = ('user',)
 
+
 class StudentSignupSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Student
 		exclude = ('user',)
 
+
 class UserCreateSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = BaseUser
-		fields = '__all__'
+		fields = ('first_name', 'last_name', 'username', 'password', 'email',)
 
-	"""def create(self, validated_data):
-		new_user = UniversityUser.objects.create(**validated_data)
-		new_user.set_password(validated_data.get['password'])
-		return new_user"""
+	def create(self, validated_data):
+		return BaseUser.objects.create_user(**validated_data)
+
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = BaseUser
-		fields = ('id', 'username',)
+		fields = ('first_name', 'last_name', 'username',)
 
 
 class TeacherListSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
 	class Meta:
 		model = Teacher
-		fields = ('first_name', 'last_name', 'user',)
+		fields = ('user',)
 
 
 class StudentListSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
 	class Meta:
 		model = Student
-		fields = ('first_name', 'last_name', 'user',)
+		fields = ('user',)
 
 from university.serializers import FacultiesListSerializer, CoursesListBriefSerializer
 
@@ -49,6 +51,7 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Teacher
 		fields = '__all__'
+
 
 class StudentProfileSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
