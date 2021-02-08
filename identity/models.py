@@ -17,7 +17,7 @@ class UniversityUser(BaseModel):
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
     class Meta:
-    	abstract = True
+        abstract = True
 
 
 class Student(UniversityUser):
@@ -26,11 +26,11 @@ class Student(UniversityUser):
 
     student_cards = models.ManyToManyField(StudentCard)
     user = models.OneToOneField(
-                to=BaseUser,
-                on_delete=models.CASCADE,
-                related_name="student",
-                related_query_name="student"
-            )
+        to=BaseUser,
+        on_delete=models.CASCADE,
+        related_name="student",
+        related_query_name="student"
+    )
 
     def __str__(self):
         return self.user.username
@@ -38,11 +38,11 @@ class Student(UniversityUser):
 
 class Teacher(UniversityUser):
     user = models.OneToOneField(
-                to=BaseUser,
-                on_delete=models.CASCADE,
-                related_name="teacher",
-                related_query_name="teacher",
-            )
+        to=BaseUser,
+        on_delete=models.CASCADE,
+        related_name="teacher",
+        related_query_name="teacher",
+    )
 
     def __str__(self):
         return self.user.username
