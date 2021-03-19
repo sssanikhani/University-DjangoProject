@@ -1,5 +1,5 @@
 Django==2.2.13
-djangorestframework==3.10.1
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.3.0
 hs-infra==0.0.9
