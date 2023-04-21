@@ -5,4 +5,4 @@ djangorestframework-simplejwt==4.3.0
 hs-infra==0.0.9
 PyJWT==1.7.1
 pytz==2019.1
-sqlparse==0.3.0
+sqlparse==0.4.4
